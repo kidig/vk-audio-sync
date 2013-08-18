@@ -1,10 +1,18 @@
 vk-audio-sync
 =============
 
-small script for downloading and syncronizing own playlist from vk.com
+Small script for downloading and syncronizing own playlist from [vk.com](http://vk.com)
 
 
-==Get started==
+Requirements
+------------
+
+* Python 2.7
+* [mutagen](https://code.google.com/p/mutagen/)
+
+
+Get started
+-----------
 
 1. rename config.py.example to config.py
 2. fill config with your settings
