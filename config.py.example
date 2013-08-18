@@ -1,0 +1,13 @@
+
+# vk.com account:
+USERNAME = 'your email'
+PASSWORD = 'your password'
+
+# vk.com app (you can use your own or leave by default)
+CLIENT_ID = '3351804'
+
+# file for saving playlist (just tab-separated text file)
+PLAYLIST = 'playlist.txt'
+
+# path for download and storing your audio files
+MUSIC_PATH = 'C:\\vkplaylist'
