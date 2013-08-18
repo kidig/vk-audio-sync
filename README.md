@@ -17,3 +17,10 @@ Get started
 1. rename config.py.example to config.py
 2. fill config with your settings
 3. run vk_audiosync.py
+
+
+
+**Please note!** This script has only been tested on Windows! 
+But I hope it will works on Linux as well! :) 
+
+So let me now about any bugs/troubles...
