@@ -81,6 +81,10 @@ def get_vk_playlist():
 
 # download mp3 files
 def download_audio_files():
+
+    if not os.path.exists(config.MUSIC_PATH):
+        os.makedirs(config.MUSIC_PATH)
+    
     for line in open(config.PLAYLIST):
         aid, artist, title, url = line.rstrip('\n').decode('utf-8').split('\t')
         filename = os.path.join(config.MUSIC_PATH, "%s_%s" % (aid, os.path.basename(url)))
