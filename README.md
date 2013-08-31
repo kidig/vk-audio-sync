@@ -2,6 +2,7 @@ vk-audio-sync
 =============
 
 Small script for downloading and syncronizing own playlist from [vk.com](http://vk.com)
+Works well on Windows, Linux (Ubuntu).
 
 
 Requirements
@@ -20,7 +21,5 @@ Get started
 
 
 
-**Please note!** This script has only been tested on Windows! 
-But I hope it will works on Linux as well! :) 
 
-So let me now about any bugs/troubles...
+Let me now about any bugs/troubles...
