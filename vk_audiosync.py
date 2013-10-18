@@ -8,12 +8,10 @@ import HTMLParser
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3NoHeaderError
 
-
 import vk_api
 import config
 
 from time import time
-
 
 
 def get_token(credentials=[]):
@@ -65,7 +63,7 @@ def set_id3(filename, title, artist):
 
 
 # audio.get
-def get_vk_playlist():
+def download_playlist():
     token, user_id = get_token(['audio'])
     user_audio = get_audio(token, user_id)['response']
 
@@ -87,38 +85,37 @@ def download_audio_files():
     
     for line in open(config.PLAYLIST):
         aid, artist, title, url = line.rstrip('\n').decode('utf-8').split('\t')
-        filename = os.path.join(config.MUSIC_PATH, "%s_%s" % (aid, os.path.basename(url)))
+        filename = os.path.basename(url).split('?')[0]
+        filepath = os.path.join(config.MUSIC_PATH, "%s_%s" % (aid, filename))
 
         print "Download %s - %s..." % (artist, title)
 
-        if os.path.isfile(filename):
+        if os.path.isfile(filepath):
             print 'File "%s - %s" already exists' % (artist, title)
             continue
 
         try:
             u = urllib2.urlopen(url)
 
-            with open(filename, 'wb') as fp:
+            with open(filepath, 'wb') as fp:
                 fp.write(u.read())
 
-            set_id3(filename, title, artist)
-
+            set_id3(filepath, title, artist)
 
         except urllib2.HTTPError, e:
-            print "HTTPError = " + str(e.code)
+            print "HTTPError:", e
             
         except IOError, e:
-            print "IOError = " + str(e.code)
-
-
-
+            print "IOError:", e
     
   
 def main():
 
     print 'start...'
     if not os.path.isfile(config.PLAYLIST):
-        get_vk_playlist()
+        print 'download playlist...',
+        download_playlist()
+        print 'ok'
         
     download_audio_files()
     
