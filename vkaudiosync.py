@@ -65,11 +65,7 @@ def set_id3(filename, **track):
     mp3info.save(filename) 
 
 
-# audio.get
 def save_tracks(filename, tracks):
-    #token, user_id = get_token(['audio'])
-    #user_audio = get_audio(token, user_id)['response']
-
     if not tracks:
         return
 
@@ -83,8 +79,6 @@ def save_tracks(filename, tracks):
 
 
 def open_tracks(filename):
-    #names = ('aid', 'artist', 'title', 'url')
-
     with codecs.open(filename, 'r', 'utf8') as fp:
         firstline = fp.next()
         fields = firstline.rstrip('\n').split('\t')
@@ -92,15 +86,8 @@ def open_tracks(filename):
             track = dict(zip(fields, line.rstrip('\n').split('\t')))
             yield track
 
-    #for line in codecs.open(filename, 'r', 'utf8'):
-    #    track = dict(zip(names, line.rstrip('\n').split('\t')))
-    #    yield track
-        #aid, artist, title, url = line.rstrip('\n').split('\t')
 
-
-# download mp3 files
 def download_tracks(tracks, storage_path='files'):
-
     if tracks and not os.path.exists(storage_path):
         os.makedirs(storage_path)
     
@@ -110,7 +97,6 @@ def download_tracks(tracks, storage_path='files'):
         track['artist'] = clean_audio_tag(track.get('artist'))
         track['title'] = clean_audio_tag(track.get('title'))
 
-        #aid, artist, title, url = line.rstrip('\n').split('\t')
         filename = os.path.basename(track.get('url')).split('?')[0]
         filepath = os.path.join(storage_path, "%s_%s" % (track.get('aid'), filename))
 
@@ -130,18 +116,15 @@ def download_tracks(tracks, storage_path='files'):
                 bar = ProgressBar(maxval=int(total)).start()
 
             with open(filepath, 'wb') as fp:
-                #shutil.copyfileobj(req, fp)
-                #fp.write(u.read())
                 chunk_size = 16 * 1024
                 loaded = 0
+                
                 for chunk in iter(lambda: req.read(chunk_size), ''):
                     fp.write(chunk)
 
                     if total:
                         loaded += len(chunk)
                         bar.update(loaded)
-                        #sys.stdout.write("\r%d%%" % (loaded))
-                        #sys.stdout.flush()
             
             if total:
                 bar.finish()
@@ -157,24 +140,26 @@ def download_tracks(tracks, storage_path='files'):
     
   
 def main():
-
-    user = {
-        'username': config.USERNAME,
-        'password': config.PASSWORD,
-        'scope': (['audio']),
-    }
-
-    client_id = config.CLIENT_ID
-
+    
     playlist = 'playlist.txt'
-
     tracks = []
 
     if not os.path.isfile(playlist):
+
+        user = {
+            'username': config.USERNAME,
+            'password': config.PASSWORD,
+            'scope': (['audio']),
+        }
+
+        client_id = config.CLIENT_ID
+
         tracks = get_audio(*get_token(client_id, **user))
         save_tracks(playlist, tracks)
+
     else:
         tracks = list(open_tracks(playlist))
+
 
     download_tracks(tracks, 'files')
     
