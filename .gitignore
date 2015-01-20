@@ -1,1 +1,4 @@
 /*.pyc
+config.py
+venv
+/playlist.txt
