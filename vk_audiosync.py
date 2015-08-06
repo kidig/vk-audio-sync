@@ -7,6 +7,7 @@ import re
 import HTMLParser
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3NoHeaderError
+import urlgrabber
 
 import vk_api
 import config
@@ -90,25 +91,16 @@ def download_audio_files():
 
         print "Download %s - %s..." % (artist, title)
 
-        if os.path.isfile(filepath):
-            print 'File "%s - %s" already exists' % (artist, title)
-            continue
-
+        g = urlgrabber.grabber.URLGrabber(reget='simple')
         try:
-            u = urllib2.urlopen(url)
+            g.urlgrab(url, filename=filepath)
+        except urlgrabber.grabber.URLGrabError, e:
+            if e.exception[1] != 'The requested URL returned error: 416 Requested Range Not Satisfiable':
+                raise
 
-            with open(filepath, 'wb') as fp:
-                fp.write(u.read())
+        set_id3(filepath, title, artist)
 
-            set_id3(filepath, title, artist)
 
-        except urllib2.HTTPError, e:
-            print "HTTPError:", e
-            
-        except IOError, e:
-            print "IOError:", e
-    
-  
 def main():
 
     print 'start...'
