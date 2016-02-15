@@ -88,6 +88,8 @@ def open_tracks(filename):
 
 
 def download_tracks(tracks, storage_path='files'):
+    storage_path = os.path.expanduser(storage_path)
+    
     if tracks and not os.path.exists(storage_path):
         os.makedirs(storage_path)
     
@@ -161,7 +163,7 @@ def main():
         tracks = list(open_tracks(playlist))
 
 
-    download_tracks(tracks, 'files')
+    download_tracks(tracks, config.MUSIC_PATH)
     
     
     print 'done.'

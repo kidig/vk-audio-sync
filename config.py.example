@@ -10,4 +10,4 @@ CLIENT_ID = '3351804'
 PLAYLIST = 'playlist.txt'
 
 # path for download and storing your audio files
-MUSIC_PATH = 'C:\\vkplaylist'
+MUSIC_PATH = '~/vkaudio'
