@@ -1,1 +1,2 @@
-mutagen==1.27
+mutagen==1.21
+progressbar==2.2
